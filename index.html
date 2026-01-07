@@ -75,24 +75,31 @@
   <div class="card" id="playerB"></div>
 </div>
 
+<!-- Supabase CDN -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
 <script>
+const supabase = supabase.createClient(
+const supabaseUrl = 'https://rddiajgbhctnhwjpxmmu.supabase.co'
+const supabaseKey = process.env.SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
+);
+
+const ROOM_ID = "2026";
+
 const goals = [
   { key: "trening", label: "Treningsøkter" },
   { key: "filmer", label: "Filmer" },
   { key: "melee", label: "SSBM Sets" },
 ];
 
-const state = JSON.parse(localStorage.getItem("nyttars")) || {
+const state = {
   names: { a: "", b: "" },
   scores: {
     a: { trening: 0, filmer: 0, melee: 0 },
     b: { trening: 0, filmer: 0, melee: 0 },
   }
 };
-
-function save() {
-  localStorage.setItem("nyttars", JSON.stringify(state));
-}
 
 function render(player) {
   const el = document.getElementById(player === "a" ? "playerA" : "playerB");
@@ -110,6 +117,38 @@ function render(player) {
   });
 }
 
+async function save() {
+  const { error } = await supabase
+    .from("progress")
+    .update({ data: state })
+    .eq("id", ROOM_ID);
+
+  if (error) {
+    console.error("SAVE ERROR:", error);
+    alert(error.message);
+  }
+}
+
+async function load() {
+  const { data, error } = await supabase
+    .from("progress")
+    .select("data")
+    .eq("id", ROOM_ID)
+    .single();
+
+  if (error) {
+    console.error("LOAD ERROR:", error);
+    alert(error.message);
+    return;
+  }
+
+  Object.assign(state, data.data);
+  document.getElementById("nameA").value = state.names.a;
+  document.getElementById("nameB").value = state.names.b;
+  render("a");
+  render("b");
+}
+
 function inc(player, key) {
   if (state.scores[player][key] < 100) {
     state.scores[player][key]++;
@@ -118,9 +157,6 @@ function inc(player, key) {
     render("b");
   }
 }
-
-document.getElementById("nameA").value = state.names.a;
-document.getElementById("nameB").value = state.names.b;
 
 document.getElementById("nameA").oninput = e => {
   state.names.a = e.target.value;
@@ -133,8 +169,8 @@ document.getElementById("nameB").oninput = e => {
   render("b");
 };
 
-render("a");
-render("b");
+// Last inn data fra Supabase når siden åpnes
+load();
 </script>
 
 </body>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nyttårsforsett 2026</title>
+  <title>Nyttårsforsett 2026 - Live</title>
   <style>
     body {
       font-family: system-ui, sans-serif;
@@ -63,7 +63,7 @@
 </head>
 <body>
 
-<h1>Nyttårsforsett 2026</h1>
+<h1>Nyttårsforsett 2026 - Live</h1>
 
 <div class="grid">
   <input id="nameA" placeholder="Navn spiller 1">
@@ -75,7 +75,6 @@
   <div class="card" id="playerB"></div>
 </div>
 
-<!-- Supabase CDN -->
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
 <script>
@@ -99,6 +98,7 @@ const state = {
   }
 };
 
+// Render funksjon
 function render(player) {
   const el = document.getElementById(player === "a" ? "playerA" : "playerB");
   el.innerHTML = `<h2>${state.names[player] || "Spiller"}</h2>`;
@@ -114,6 +114,7 @@ function render(player) {
   });
 }
 
+// Save til Supabase
 async function save() {
   const { error } = await supabase
     .from("progress")
@@ -122,10 +123,10 @@ async function save() {
 
   if (error) {
     console.error("SAVE ERROR:", error);
-    alert(error.message);
   }
 }
 
+// Load fra Supabase
 async function load() {
   const { data, error } = await supabase
     .from("progress")
@@ -133,19 +134,16 @@ async function load() {
     .eq("id", ROOM_ID)
     .single();
 
-  if (error) {
-    console.error("LOAD ERROR:", error);
-    alert(error.message);
-    return;
+  if (!error && data && data.data) {
+    Object.assign(state, data.data);
+    document.getElementById("nameA").value = state.names.a;
+    document.getElementById("nameB").value = state.names.b;
+    render("a");
+    render("b");
   }
-
-  Object.assign(state, data.data);
-  document.getElementById("nameA").value = state.names.a;
-  document.getElementById("nameB").value = state.names.b;
-  render("a");
-  render("b");
 }
 
+// Increment
 function inc(player, key) {
   if (state.scores[player][key] < 100) {
     state.scores[player][key]++;
@@ -155,6 +153,7 @@ function inc(player, key) {
   }
 }
 
+// Input events
 document.getElementById("nameA").oninput = e => {
   state.names.a = e.target.value;
   save();
@@ -166,8 +165,12 @@ document.getElementById("nameB").oninput = e => {
   render("b");
 };
 
-// Last inn data fra Supabase når siden åpnes
+// Initial load
 load();
+
+// Polling for live updates hvert 1,5 sekund
+setInterval(load, 1500);
+
 </script>
 
 </body>

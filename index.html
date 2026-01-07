@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nyttårsforsett 2026</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f3f4f6;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1 { text-align: center; }
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+    @media (min-width: 700px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    .card {
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,.1);
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+    }
+    button {
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: none;
+      background: black;
+      color: white;
+      cursor: pointer;
+    }
+    .bar {
+      background: #e5e7eb;
+      border-radius: 999px;
+      height: 8px;
+      margin-top: 6px;
+    }
+    .bar > div {
+      height: 8px;
+      background: #22c55e;
+      border-radius: 999px;
+      width: 0%;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Nyttårsforsett 2026</h1>
+
+<div class="grid">
+  <input id="nameA" placeholder="Navn spiller 1">
+  <input id="nameB" placeholder="Navn spiller 2">
+</div>
+
+<div class="grid">
+  <div class="card" id="playerA"></div>
+  <div class="card" id="playerB"></div>
+</div>
+
+<script>
+const goals = [
+  { key: "trening", label: "Treningsøkter" },
+  { key: "filmer", label: "Filmer" },
+  { key: "melee", label: "SSBM Sets" },
+];
+
+const state = JSON.parse(localStorage.getItem("nyttars")) || {
+  names: { a: "", b: "" },
+  scores: {
+    a: { trening: 0, filmer: 0, melee: 0 },
+    b: { trening: 0, filmer: 0, melee: 0 },
+  }
+};
+
+function save() {
+  localStorage.setItem("nyttars", JSON.stringify(state));
+}
+
+function render(player) {
+  const el = document.getElementById(player === "a" ? "playerA" : "playerB");
+  el.innerHTML = `<h2>${state.names[player] || "Spiller"}</h2>`;
+
+  goals.forEach(g => {
+    const val = state.scores[player][g.key];
+    el.innerHTML += `
+      <div class="row">
+        <span>${g.label}: ${val} / 100</span>
+        <button onclick="inc('${player}','${g.key}')">+1</button>
+      </div>
+      <div class="bar"><div style="width:${val}%"></div></div>
+    `;
+  });
+}
+
+function inc(player, key) {
+  if (state.scores[player][key] < 100) {
+    state.scores[player][key]++;
+    save();
+    render("a");
+    render("b");
+  }
+}
+
+document.getElementById("nameA").value = state.names.a;
+document.getElementById("nameB").value = state.names.b;
+
+document.getElementById("nameA").oninput = e => {
+  state.names.a = e.target.value;
+  save();
+  render("a");
+};
+document.getElementById("nameB").oninput = e => {
+  state.names.b = e.target.value;
+  save();
+  render("b");
+};
+
+render("a");
+render("b");
+</script>
+
+</body>
+</html>

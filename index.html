@@ -79,11 +79,10 @@
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
 <script>
-const supabase = supabase.createClient(
-  "https://rddiajgbhctnhwjpxmmu.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkZGlhamdiaGN0bmh3anB4bW11Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4MTAwMjYsImV4cCI6MjA4MzM4NjAyNn0.2HUwOWNyEP8f8WZik1tcTje70YsY3-HuFjmmdH7xZwg"
-);
-  
+const supabaseUrl = 'https://rddiajgbhctnhwjpxmmu.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkZGlhamdiaGN0bmh3anB4bW11Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc4MTAwMjYsImV4cCI6MjA4MzM4NjAyNn0.2HUwOWNyEP8f8WZik1tcTje70YsY3-HuFjmmdH7xZwg';
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
 const ROOM_ID = "2026";
 
 const goals = [
@@ -103,7 +102,6 @@ const state = {
 function render(player) {
   const el = document.getElementById(player === "a" ? "playerA" : "playerB");
   el.innerHTML = `<h2>${state.names[player] || "Spiller"}</h2>`;
-
   goals.forEach(g => {
     const val = state.scores[player][g.key];
     el.innerHTML += `
@@ -174,7 +172,3 @@ load();
 
 </body>
 </html>
-
-
-
-

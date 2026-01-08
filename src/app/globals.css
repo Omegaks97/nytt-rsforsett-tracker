@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-@layer base {
-  body {
-    @apply bg-[#0f172a] text-white;
-    margin: 0;
-  }
+/* Dette tvinger mørk bakgrunn selv om Tailwind skulle svikte litt */
+body {
+  background-color: #0f172a !important;
+  color: white !important;
+  margin: 0;
 }

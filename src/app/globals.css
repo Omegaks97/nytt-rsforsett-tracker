@@ -1,12 +1,8 @@
 @import "tailwindcss";
 
-/* Resten av din custom CSS under her */
-:root {
-  color-scheme: dark;
-}
-
-body {
-  background-color: #0f172a;
-  color: white;
-  margin: 0;
+@layer base {
+  body {
+    @apply bg-[#0f172a] text-white;
+    margin: 0;
+  }
 }

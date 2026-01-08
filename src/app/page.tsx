@@ -1,5 +1,6 @@
 'use client';
 
+import './globals.css'; // Sørg for at denne linjen er der!
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 

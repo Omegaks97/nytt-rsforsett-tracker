@@ -14,15 +14,13 @@
     "react-dom": "latest",
     "tailwindcss": "latest",
     "@tailwindcss/postcss": "latest",
-    "@supabase/supabase-js": "latest",
+    "postcss": "latest",
+    "@supabase/supabase-js": "latest"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.1",
-    "typescript": "^5"
+    "typescript": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest"
   }
 }

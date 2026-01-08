@@ -9,11 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.90.1",
-    "next": "16.1.1",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
-  },
+  "@supabase/supabase-js": "latest",
+  "next": "latest",
+  "react": "latest",
+  "react-dom": "latest",
+  "tailwindcss": "latest",
+  "@tailwindcss/postcss": "latest",
+  "postcss": "latest"
+},
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

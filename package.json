@@ -14,7 +14,6 @@
     "react-dom": "latest",
     "tailwindcss": "latest",
     "@tailwindcss/postcss": "latest",
-    "postcss": "latest"
     "@supabase/supabase-js": "latest",
   },
   "devDependencies": {
@@ -24,7 +23,6 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }

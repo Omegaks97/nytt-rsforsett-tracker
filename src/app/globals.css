@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
-/* Dette tvinger mørkt tema og farger */
-@theme {
-  --color-background: #0f172a;
-  --color-foreground: #ffffff;
-}
-
 :root {
-  background-color: #0f172a;
-  color: white;
+  --background: #0f172a;
+  --foreground: #ffffff;
 }
 
-/* En liten fiks for å sikre at progresjonsbarer har høyde */
-.h-2 { height: 0.5rem; }
-.h-3 { height: 0.75rem; }
-.rounded-full { border-radius: 9999px; }
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  margin: 0;
+}
+
+/* Tvinger frem synlighet på barene hvis de mangler høyde */
+.h-2 { height: 8px !important; }
+.h-3 { height: 12px !important; }
+.rounded-full { border-radius: 9999px !important; }

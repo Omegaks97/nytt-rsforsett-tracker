@@ -13,9 +13,8 @@
     "react": "latest",
     "react-dom": "latest",
     "tailwindcss": "^4.0.0",
-    "@tailwindcss/next": "^4.0.0",
     "@supabase/supabase-js": "latest"
-  },
+    },
   "devDependencies": {
     "typescript": "latest",
     "@types/node": "latest",

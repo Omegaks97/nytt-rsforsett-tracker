@@ -1,16 +1,17 @@
 @import "tailwindcss";
 
+/* Dette tvinger mørkt tema og farger */
 @theme {
-  --font-sans: var(--font-inter);
+  --color-background: #0f172a;
+  --color-foreground: #ffffff;
 }
 
-/* Dette sikrer at mørkt tema alltid er aktivt */
 :root {
-  --background: #0f172a;
-  --foreground: #ffffff;
+  background-color: #0f172a;
+  color: white;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-}
+/* En liten fiks for å sikre at progresjonsbarer har høyde */
+.h-2 { height: 0.5rem; }
+.h-3 { height: 0.75rem; }
+.rounded-full { border-radius: 9999px; }
